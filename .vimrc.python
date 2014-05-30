@@ -1,0 +1,44 @@
+function! InitPython()
+    " jedi.vimとpyhoncompleteがバッティングし得るらしいので
+    " http://mattn.kaoriya.net/software/vim/20121018212621.htm
+    let b:did_ftplugin = 1
+ 
+    setlocal commentstring=#%s
+ 
+    " rename用のマッピングを無効にしたため、代わりにコマンドを定義
+    command! -nargs=0 JediRename :call jedi#rename()
+ 
+    " markdownはインベント幅4,タブ幅8でスペースを使う
+    " http://d.hatena.ne.jp/over80/20090305/1236264851
+    setlocal shiftwidth=4
+    setlocal tabstop=8
+    setlocal softtabstop=4
+    setlocal expandtab
+ 
+    setlocal autoindent
+    setlocal smartindent
+    setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
+ 
+    nnoremap <buffer> <leader>l :<C-u>call Flake8()<CR>
+ 
+    IndentGuidesEnable
+    let g:syntastic_mode_map = {
+                \ 'mode': 'active',
+                \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
+                \ 'passive_filetypes': ['html', 'haskell', 'python']
+                \}
+
+    colorscheme desert256
+    hi IndentGuidesOdd  ctermbg=darkgrey
+    hi IndentGuidesEven ctermbg=lightgray
+    let g:indent_guides_start_level=2
+    let g:indent_guides_guide_size=1
+    set ts=4 sw=4 et
+endfunction
+autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
+ 
+" pythonのrename用のマッピングがquickrunとかぶるため回避させる
+let g:jedi#rename_command = "<Leader><C-r><C-r>"
+let g:jedi#pydoc = "<Leader>k"
+ 
+let g:flake8_builtins="_,apply"
