@@ -92,9 +92,18 @@ unsetopt promptcr
 
 # alias
 alias pd=popd
-alias ls='ls --color=auto'
-alias ll='ls -l'
-alias la='ls -a'
 alias .='source'
 alias py="python"
 alias irb='pry'
+case "${OSTYPE}" in
+  darwin*)
+    alias ls='ls -G'
+    alias ll='ls -lG'
+    alias la='ls -laG'
+    ;;
+  linux*)
+    alias ls='ls --color=auto'
+    alias ll='ls -l'
+    alias la='ls -a'
+    ;;
+esac
