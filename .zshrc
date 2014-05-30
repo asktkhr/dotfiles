@@ -100,6 +100,9 @@ case "${OSTYPE}" in
     alias ls='ls -G'
     alias ll='ls -lG'
     alias la='ls -laG'
+    export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+    alias mvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/mvim "$@"'
+    alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     ;;
   linux*)
     alias ls='ls --color=auto'
