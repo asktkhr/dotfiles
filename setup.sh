@@ -23,3 +23,6 @@ mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/colors
 ln -Fs "$PWD/desert256.vim/colors/desert256.vim" "$HOME/.vim/colors/desert256.vim"
 ln -Fs "$PWD/vim-irblack/colors/ir_black.vim" "$HOME/.vim/colors/ir_black.vim"
+
+mkdir $HOME/zsh_plugins && cd $HOME/zsh_plugins
+git clone git://github.com/zsh-users/zaw.git

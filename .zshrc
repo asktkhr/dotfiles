@@ -110,3 +110,16 @@ case "${OSTYPE}" in
     alias la='ls -a'
     ;;
 esac
+
+autoload -U chpwd_recent_dirs cdr
+chpwd_functions+=chpwd_recent_dirs
+zstyle ":chpwd:*" recent-dirs-max 500
+zstyle ":chpwd:*" recent-dirs-default true
+zstyle ":completion:*" recent-dirs-insert always
+
+# zaw
+source ~/zsh_plugins/zaw/zaw.zsh
+bindkey '^o' zaw-open-file
+bindkey '^@' zaw-cdr
+bindkey '^r' zaw-history
+bindkey '^t' zaw-tmux
