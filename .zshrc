@@ -88,6 +88,57 @@ PROMPT=" %{${fg[yellow]}%}%~%{${reset_color}%}
 %{$fg_bold[cyan]%}%n@${HOST}$%{${reset_color}%} "
 PROMPT2='[%n]> ' 
 
+# ----- PROMPT -----
+## PROMPT
+#PROMPT=$'[%*] → '
+## RPROMPT
+RPROMPT=$'`branch-status-check` %~' # %~はpwd
+setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
+
+# {{{ methods for RPROMPT
+# fg[color]表記と$reset_colorを使いたい
+# @see https://wiki.archlinux.org/index.php/zsh
+autoload -U colors; colors
+function branch-status-check {
+    local prefix branchname suffix
+        # .gitの中だから除外
+        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+            return
+        fi
+        branchname=`get-branch-name`
+        # ブランチ名が無いので除外
+        if [[ -z $branchname ]]; then
+            return
+        fi
+        prefix=`get-branch-status` #色だけ返ってくる
+        suffix='%{'${reset_color}'%}'
+        echo ${prefix}${branchname}${suffix}
+}
+function get-branch-name {
+    # gitディレクトリじゃない場合のエラーは捨てます
+    echo `git rev-parse --abbrev-ref HEAD 2> /dev/null`
+}
+function get-branch-status {
+    local res color
+        output=`git status --short 2> /dev/null`
+        if [ -z "$output" ]; then
+            res=':' # status Clean
+            color='%{'${fg[green]}'%}'
+        elif [[ $output =~ "[\n]?\?\? " ]]; then
+            res='?:' # Untracked
+            color='%{'${fg[yellow]}'%}'
+        elif [[ $output =~ "[\n]? M " ]]; then
+            res='M:' # Modified
+            color='%{'${fg[red]}'%}'
+        else
+            res='A:' # Added to commit
+            color='%{'${fg[cyan]}'%}'
+        fi
+        # echo ${color}${res}'%{'${reset_color}'%}'
+        echo ${color} # 色だけ返す
+}
+# }}}
+
 unsetopt promptcr
 
 # alias
@@ -95,6 +146,7 @@ alias pd=popd
 alias .='source'
 alias py="python"
 alias irb='pry'
+alias be='bundle exec'
 case "${OSTYPE}" in
   darwin*)
     alias ls='ls -G'
@@ -120,6 +172,6 @@ zstyle ":completion:*" recent-dirs-insert always
 # zaw
 source ~/zsh_plugins/zaw/zaw.zsh
 bindkey '^o' zaw-open-file
-bindkey '^@' zaw-cdr
-bindkey '^r' zaw-history
+bindkey '^@' zaw-git-branches
+# bindkey '^r' zaw-history
 bindkey '^t' zaw-tmux
