@@ -1,3 +1,9 @@
+"-----------------------------------
+"   The-NERD-Tree
+"-----------------------------------
+nmap ; :NERDTreeToggle<CR>
+
+
 "------------------------------------
 " unite.vim
 "------------------------------------
@@ -64,10 +70,58 @@ let g:unite_source_file_mru_limit = 200
 cnoremap UH Unite help<Enter>
 cnoremap UO Unite outline<Enter>
 
+
+" submode
+call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
+call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
+call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
+call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
+call submode#map('winsize', 'n', '', '>', '<C-w>>')
+call submode#map('winsize', 'n', '', '<', '<C-w><')
+call submode#map('winsize', 'n', '', '+', '<C-w>-')
+call submode#map('winsize', 'n', '', '-', '<C-w>+')
+
 "-----------------------------------
-"   The-NERD-Tree
+"  vimshell 
 "-----------------------------------
-nmap ; :NERDTreeToggle<CR>
+" ,is: シェルを起動
+nnoremap <silent> ,is :VimShell<CR>
+" ,irb: irbを非同期で起動
+nnoremap <silent> ,irb :VimShellInteractive irb<CR>
+" ,pry: pryを非同期で起動
+nnoremap <silent> ,pry :VimShellInteractive pry<CR>
+" ,ss: 非同期で開いたインタプリタに現在の行を評価させる
+vmap <silent> ,ss :VimShellSendString<CR>
+" 選択中に,ss: 非同期で開いたインタプリタに選択行を評価させる
+nnoremap <silent> ,ss <S-v>:VimShellSendString<CR>
+
+
+" emmet
+let g:user_emmet_settings = {
+\  'lang' : 'ja',
+\  'html' : {
+\    'filters' : 'html',
+\    'indentation' : '    '
+\  },
+\  'css' : {
+\    'filters' : 'fc',
+\  },
+\  'javascript' : {
+\    'indentation' : '    ',
+\    'snippets' : {
+\      'jq' : "$(function() {\n\t${cursor}${child}\n});",
+\      'jq:each' : "$.each(arr, function(index, item)\n\t${child}\n});",
+\      'fn' : "(function() {\n\t${cursor}\n})();",
+\      'tm' : "setTimeout(function() {\n\t${cursor}\n}, 100);",
+\    },
+\  },
+\  'coffee' : {
+\    'indentation' : '    ',
+\    'snippets' : {
+\    },
+\  },
+\}
+
 
 "-----------------------------------
 "   neocomple
@@ -143,6 +197,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -155,28 +210,3 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-"-----------------------------------
-"  vimshell 
-"-----------------------------------
-" ,is: シェルを起動
-nnoremap <silent> ,is :VimShell<CR>
-" ,irb: irbを非同期で起動
-nnoremap <silent> ,irb :VimShellInteractive irb<CR>
-" ,pry: pryを非同期で起動
-nnoremap <silent> ,pry :VimShellInteractive pry<CR>
-" ,ss: 非同期で開いたインタプリタに現在の行を評価させる
-vmap <silent> ,ss :VimShellSendString<CR>
-" 選択中に,ss: 非同期で開いたインタプリタに選択行を評価させる
-nnoremap <silent> ,ss <S-v>:VimShellSendString<CR>
-
-
-" submode
-call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
-call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
-call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
-call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
-call submode#map('winsize', 'n', '', '>', '<C-w>>')
-call submode#map('winsize', 'n', '', '<', '<C-w><')
-call submode#map('winsize', 'n', '', '+', '<C-w>-')
-call submode#map('winsize', 'n', '', '-', '<C-w>+')

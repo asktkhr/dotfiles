@@ -104,32 +104,6 @@ endif
 
 nnoremap <Space>. :<C-u>tabedit ~/dotfiles<CR>
 
-" emmet
-let g:user_emmet_settings = {
-\  'lang' : 'ja',
-\  'html' : {
-\    'filters' : 'html',
-\    'indentation' : '    '
-\  },
-\  'css' : {
-\    'filters' : 'fc',
-\  },
-\  'javascript' : {
-\    'indentation' : '    ',
-\    'snippets' : {
-\      'jq' : "$(function() {\n\t${cursor}${child}\n});",
-\      'jq:each' : "$.each(arr, function(index, item)\n\t${child}\n});",
-\      'fn' : "(function() {\n\t${cursor}\n})();",
-\      'tm' : "setTimeout(function() {\n\t${cursor}\n}, 100);",
-\    },
-\  },
-\  'coffee' : {
-\    'indentation' : '    ',
-\    'snippets' : {
-\    },
-\  },
-\}
-
 " neobundle
 let g:neobundle_default_git_protocol = 'https'
 
