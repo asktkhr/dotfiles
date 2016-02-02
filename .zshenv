@@ -35,9 +35,8 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 # export PATH=$PATH:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools
 
 # # golang
-# export GOROOT=$HOME/go # goコマンドへのパス/bin (exportせずとも、PATHへのバインドさえすれば良い気もする) る)
-# export GOPATH=$HOME/go/package # go get でインストールしてくるパッケージへのパス？
-# # こっちはgo getするときに参照されるので、exportする必要有り
+# export GOROOT=$HOME/go
+# export GOPATH=$HOME/go/package
 
 # export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
